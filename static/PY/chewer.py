@@ -2,7 +2,9 @@
 import pandas as pd
 import json
 import os
+from scipy import stats as st
 from pprint import pprint
+
 
 #%%
 filepath = os.path.join("..","Data","countries.geojson")
@@ -89,19 +91,21 @@ for country in countries:
     GDP[country]['Values'] = []
     Freedom[country]['Correlation'] = 0
 #%%
+#populating dict['Values']
 for df in happyDFs:
     for index, row in df.iterrows():
         if row['Country'] in (countries):
-            try:
-                Happy[row['Country']]['Values'].append(row['Happiness Score'])
-                Freedom[row['Country']]['Values'].append(row['Freedom'])
-                GDP[row['Country']]['Values'].append(row['Economy (GDP per Capita)'])
-            except:
-                pass
+            Happy[row['Country']]['Values'].append(row['Happiness Score'])
+            Freedom[row['Country']]['Values'].append(row['Freedom'])
+            GDP[row['Country']]['Values'].append(row['Economy (GDP per Capita)'])
 
+#populating dict['Correlation']
+for country in countries:
+    Happy[country]['Correlation'] = st.pearsonr(Elon, Happy[country]['Values'])[0]
+    Freedom[country]['Correlation'] = st.pearsonr(Elon, Freedom[country]['Values'])[0]
+    GDP[country]['Correlation'] = st.pearsonr(Elon, GDP[country]['Values'])[0]
 
-#%%
+# %%
+pprint(Happy)
 
-
-pprint(len(countries))
 # %%
