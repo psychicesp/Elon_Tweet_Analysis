@@ -15,8 +15,7 @@ def musk():
     
 @app.route("/happy")
 def happy():
-    pass
-
+   return "sup :)"
 
 if __name__ == "__main__":
     app.run(debug=True)
