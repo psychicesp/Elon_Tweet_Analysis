@@ -49,9 +49,15 @@ print(dicto)
 
 for country in countries:
         output_dict[country] = {}
-        output_dict[country]['Happiness'] = []
-        output_dict[country]['Freedom'] = []
-        output_dict[country]['GDP'] = []
+        output_dict[country]['Happiness']= {}
+        output_dict[country]['Happiness']['Values'] = []
+        output_dict[country]['Happiness']['Correlation'] = 0
+        output_dict[country]['Freedom']={}
+        output_dict[country]['Freedom']['Values']= []
+        output_dict[country]['Freedom']['Correlation'] = 0
+        output_dict[country]['GDP']={}
+        output_dict[country]['GDP']['Values'] = []
+        output_dict[country]['GDP']['Correlation'] = 0
 
 print(output_dict)
 for df in happyDFs:
@@ -74,7 +80,11 @@ for df in happyDFs:
     except:
         pass
     for index, row in df.iterrows():
-        output_dict[row['Country']]['Happiness'].append(row['Happiness Score'])
-        output_dict[row['Country']]['Freedom'].append(row['Freedom'])
-        output_dict[row['Country']]['GDP'].append(row['Economy (GDP per Capita)'])
+        if row['Country'] in (countries):
+            try:
+                output_dict[row['Country']]['Happiness']['Values'].append(row['Happiness Score'])
+                output_dict[row['Country']]['Freedom']['Values'].append(row['Freedom'])
+                output_dict[row['Country']]['GDP']['Values'].append(row['Economy (GDP per Capita)'])
+            except:
+                pass
 pprint(output_dict)
