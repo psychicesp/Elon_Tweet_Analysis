@@ -11,9 +11,9 @@ app = Flask(__name__)
 #%%
 @app.route("/")
 def musk():
-    return render_template("static/templates/index.html")
+    return "sup"
     
-@app.route("/scrape")
+@app.route("/happy")
 def happy():
     pass
 
