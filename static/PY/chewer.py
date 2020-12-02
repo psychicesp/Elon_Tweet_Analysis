@@ -109,3 +109,16 @@ for country in countries:
 pprint(Happy)
 
 # %%
+# Writing the variables to JavaScript
+file_name = os.path.join('..','JS','variables.js')
+with open(file_name, 'w') as js_biggins:
+    js_biggins.write(f"var shapes = {shapes}\n")
+
+with open(file_name, 'a') as js_biggins:
+    js_biggins.write(f"var elon = {Elon}\n")
+    js_biggins.write(f"var years = {years}\n")
+    js_biggins.write(f"var countries = {countries}\n")
+    js_biggins.write(f"var happy = {Happy}\n")
+    js_biggins.write(f"var freedom = {Freedom}\n")
+    js_biggins.write(f"var GDP = {GDP}\n")
+    js_biggins.write(f"var hiddenMessage = 'you da best!'")
