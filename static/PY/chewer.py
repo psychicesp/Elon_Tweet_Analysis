@@ -26,50 +26,57 @@ elon_year = elon.groupby('year').agg({
 
 elon_year = elon_year.reset_index()
 
-elon_tweets = elon_year['conversation_id'].tolist()
-print(elon_tweets)
+###'Elon' carries the list of elon tweet numbers!!###
+Elon = elon_year['conversation_id'].tolist()
+print(Elon)
 
-output_dict['elon'] = elon_tweets
+
 # %%
-file_structure = '../CSVs/Happiness/'
+
+
+###'years' carries the list of years###
 years = [2015,2016,2017,2018,2019,2020]
 
 happyDFs = []
-
+file_structure = '../CSVs/Happiness/'
 for i in years:
     happyDFs.append(pd.read_csv(f"{file_structure}{str(i)}.csv"))
 
 countries = happyDFs[0]['Country'].tolist()
 
-
-for country in countries:
-        output_dict[country] = {}
-        output_dict[country]['Geometry'] = []
-        output_dict[country]['Happiness']= {}
-        output_dict[country]['Happiness']['Values'] = []
-        output_dict[country]['Happiness']['Correlation'] = 0
-        output_dict[country]['Freedom']={}
-        output_dict[country]['Freedom']['Values']= []
-        output_dict[country]['Freedom']['Correlation'] = 0
-        output_dict[country]['GDP']={}
-        output_dict[country]['GDP']['Values'] = []
-        output_dict[country]['GDP']['Correlation'] = 0
-print(len(countries))
+Happy = {}
+GDP = {}
+Freedom = {}
 #%%
+
+###'countries' carries the list of countries; the following code filters out any country that is not common to every .csv ###
 for df in happyDFs:
     for country in countries:
         df_countries = df['Country'].tolist()
         if country not in df_countries:
             countries.remove(country)
-print(len(countries))
+
+for country in countries:
+    Happy[country] = {}
+    Happy[country]['Values'] = []
+    Happy[country]['Correlation'] = 0
+    Freedom[country] = {}
+    Freedom[country]['Values']= []
+    Freedom[country]['Correlation'] = 0
+    GDP[country] = {}
+    GDP[country]['Values'] = []
+    Freedom[country]['Correlation'] = 0
 #%%
 for df in happyDFs:
     for index, row in df.iterrows():
         if row['Country'] in (countries):
             try:
-                output_dict[row['Country']]['Happiness']['Values'].append(row['Happiness Score'])
-                output_dict[row['Country']]['Freedom']['Values'].append(row['Freedom'])
-                output_dict[row['Country']]['GDP']['Values'].append(row['Economy (GDP per Capita)'])
+                Happy[row['Country']]['Values'].append(row['Happiness Score'])
+                Freedom[row['Country']]['Values'].append(row['Freedom'])
+                GDP[row['Country']]['Values'].append(row['Economy (GDP per Capita)'])
             except:
                 pass
-pprint(output_dict)
+
+shapes = {}
+
+pprint(Happy)
