@@ -48,6 +48,10 @@ Happy = {}
 GDP = {}
 Freedom = {}
 #%%
+#2020 GDP values are in a higher order of magnitude, it seems, so I'm dividing them all by 10.
+
+happyDFs[-1]['Economy (GDP per Capita)'] = happyDFs[-1]['Economy (GDP per Capita)']/10
+#%%
 
 ###'countries' carries the list of countries; the following code filters out any country that is not common to every .csv ###
 for df in happyDFs:
@@ -79,4 +83,4 @@ for df in happyDFs:
 
 shapes = {}
 
-pprint(Happy)
+pprint(GDP)
