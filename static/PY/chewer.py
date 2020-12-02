@@ -72,6 +72,7 @@ for feature in shapes_json['features']:
         shapes[feature['properties']['ADMIN']] = feature['geometry']['coordinates']
 
 #6 countries are not represented in 'shapes' so we need to remove these from countries
+#Names maually changes so there are no more mismatches
 for country in countries:
         if country not in shapes.keys():
             print(country)
