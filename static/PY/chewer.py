@@ -41,14 +41,10 @@ for i in years:
 
 countries = happyDFs[0]['Country'].tolist()
 
-dicto = {}
-
-dicto['one']= 4
-
-print(dicto)
 
 for country in countries:
         output_dict[country] = {}
+        output_dict[country]['Geometry'] = []
         output_dict[country]['Happiness']= {}
         output_dict[country]['Happiness']['Values'] = []
         output_dict[country]['Happiness']['Correlation'] = 0
@@ -58,27 +54,16 @@ for country in countries:
         output_dict[country]['GDP']={}
         output_dict[country]['GDP']['Values'] = []
         output_dict[country]['GDP']['Correlation'] = 0
-
-print(output_dict)
+print(len(countries))
+#%%
 for df in happyDFs:
-    try:
-        df.rename({
-            'Happiness.score':'Happiness Score'
-        }, axis = 1, inplace = True)
-    except:
-        pass
-    try:
-        df.rename({
-            'Score':'Happiness Score'
-        }, axis = 1, inplace = True)
-    except:
-        pass
-    try:
-        df.rename({
-            'Ladder score':'Happiness Score'
-        }, axis = 1, inplace = True)
-    except:
-        pass
+    for country in countries:
+        df_countries = df['Country'].tolist()
+        if country not in df_countries:
+            countries.remove(country)
+print(len(countries))
+#%%
+for df in happyDFs:
     for index, row in df.iterrows():
         if row['Country'] in (countries):
             try:
