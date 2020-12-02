@@ -1,9 +1,15 @@
 #%%
 import pandas as pd
+import json
+import os
 from pprint import pprint
-#%%
 
-elon = pd.read_csv("../CSVs/elonmusk.csv")
+#%%
+filepath = os.path.join("..","Data","countries.geojson")
+with open(filepath) as jsonfile:
+    shapes_json = json.load(jsonfile)
+
+elon = pd.read_csv("../Data/elonmusk.csv")
 # %%
 elon.head()
 def year_getter(x):
@@ -38,7 +44,7 @@ print(Elon)
 years = [2015,2016,2017,2018,2019,2020]
 
 happyDFs = []
-file_structure = '../CSVs/Happiness/'
+file_structure = '../Data/Happiness/'
 for i in years:
     happyDFs.append(pd.read_csv(f"{file_structure}{str(i)}.csv"))
 
@@ -58,6 +64,17 @@ for df in happyDFs:
     for country in countries:
         df_countries = df['Country'].tolist()
         if country not in df_countries:
+            countries.remove(country)
+
+shapes = {}
+for feature in shapes_json['features']:
+    if feature['properties']['ADMIN'] in countries:
+        shapes[feature['properties']['ADMIN']] = feature['geometry']['coordinates']
+
+#6 countries are not represented in 'shapes' so we need to remove these from countries
+for country in countries:
+        if country not in shapes.keys():
+            print(country)
             countries.remove(country)
 
 for country in countries:
@@ -81,6 +98,9 @@ for df in happyDFs:
             except:
                 pass
 
-shapes = {}
 
-pprint(GDP)
+#%%
+
+
+pprint(len(countries))
+# %%
