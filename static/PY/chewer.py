@@ -71,17 +71,14 @@ for df in happyDFs:
         if country not in df_countries:
             countries.remove(country)
 
-shapes = {}
-for feature in shapes_json['features']:
-    if feature['properties']['ADMIN'] in countries:
-        shapes[feature['properties']['ADMIN']] = feature['geometry']['coordinates']
+
 
 #6 countries are not represented in 'shapes' so we need to remove these from countries
 #Names maually changes so there are no more mismatches
-for country in countries:
-        if country not in shapes.keys():
-            print(country)
-            countries.remove(country)
+# for country in countries:
+#         if country not in shapes.keys():
+#             print(country)
+#             countries.remove(country)
 
 for country in countries:
     Happy[country] = {}
@@ -111,11 +108,49 @@ for country in countries:
 # %%
 pprint(Happy)
 
-# %%
-# Writing the variables to JavaScript
+#%%
+
+lists = lists = {
+    'Name':'Lists',
+    'Elon':Elon,
+    'Years':years,
+    'Countries':countries
+}
+# response_vars = {
+#     'Name':'Dictionaries',
+#     'Happy': Happy,
+#     'Freedom':Freedom,
+#     'GDP':GDP
+# }
+
+shapes = []
+for feature in shapes_json['features']:
+    if feature['properties']['ADMIN'] in countries:
+        feature['Name'] = feature['properties']['ADMIN']
+        feature['properties']['freedom'] = {}
+        feature['properties']['freedom']['values'] = Freedom[feature['properties']['ADMIN']]['Values']
+        feature['properties']['freedom']['correlation'] = Freedom[feature['properties']['ADMIN']]['Correlation']
+        feature['properties']['happy'] = {}
+        feature['properties']['happy']['values'] = Happy[feature['properties']['ADMIN']]['Values']
+        feature['properties']['happy']['correlation'] = Happy[feature['properties']['ADMIN']]['Correlation']
+        feature['properties']['correlation'] = Happy[feature['properties']['ADMIN']]['Correlation']
+        feature['properties']['GDP'] = {}
+        feature['properties']['GDP']['values'] = GDP[feature['properties']['ADMIN']]['Values']
+        feature['properties']['GDP']['correlation'] = GDP[feature['properties']['ADMIN']]['Correlation']
+        shapes.append(feature)
+
+# elon_db.insert_one(lists)
+# for shape in shapes:
+#     elon_db.insert_one(shape)
+
+shapes_dict = {
+    "type": "FeatureCollection",
+    "features":shapes
+}
+#Writing the variables to JavaScript
 file_name = os.path.join('..','JS','variables.js')
 with open(file_name, 'w') as js_biggins:
-    js_biggins.write(f"var shapes = {shapes}\n")
+    js_biggins.write(f"var shapes = {shapes_dict}\n")
 
 with open(file_name, 'a') as js_biggins:
     js_biggins.write(f"var elon = {Elon}\n")
@@ -125,19 +160,3 @@ with open(file_name, 'a') as js_biggins:
     js_biggins.write(f"var freedom = {Freedom}\n")
     js_biggins.write(f"var GDP = {GDP}\n")
     js_biggins.write(f"var hiddenMessage = 'you da best!'")
-
-lists = lists = {
-    'Name':'Lists',
-    'Elon':Elon,
-    'Years':years,
-    'Countries':countries
-}
-response_vars = {
-    'Name':'Dictionaries',
-    'Happy': Happy,
-    'Freedom':Freedom,
-    'GDP':GDP
-}
-
-elon_db.insert_one(lists)
-elon_db.insert_one(response_vars)

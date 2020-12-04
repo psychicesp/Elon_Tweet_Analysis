@@ -1,6 +1,3 @@
-
-Horizontal bar graph with top 10 best correlation statistics in logic.js
-Horizontal bar graph with bottom 10 correlation statistics in logic.js
 Dynamic line graph with individual country vs elons tweets (dual y-axes)
 drop-down to pick country in logic.js
 
@@ -8,6 +5,7 @@ drop-down to pick country in logic.js
 chewer.py need to store variable in Mongo
 app.py needs to read from Mongo
 app.py needs to serve up index.html and variables to webpage
+filter geojson based on countries
 
 -------Kristian-------
 3 buttons to choose response variable in index.html
@@ -16,3 +14,5 @@ style.css needs strong, obsessive pre-teen-girl-style elon theme
 
 -------John-------
 Chloropleth map with pop-ups in logic.js
+Horizontal bar graph with top 10 best correlation statistics in logic.js
+Horizontal bar graph with bottom 10 correlation statistics in logic.js
