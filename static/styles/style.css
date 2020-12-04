@@ -1,0 +1,24 @@
+body{
+    background-color:rgb(187, 187, 187);
+    color: rgb(0, 0, 65);
+    background-image: url(bacteria.jpg);
+    font-family:"Lucida"; 
+    opacity: 0.73;
+}
+.smawl{
+    font-size: 110%;
+}
+.color{
+    background-color: rgb(236, 209, 252);
+}
+.lined{
+    border:  rgb(0, 0, 65);
+    border-style: solid;
+    border-width: 2px;
+}
+}
+.panel > .panel-heading {
+    background-color: rgb(236, 209, 252);
+    color:  rgb(0, 0, 65);
+
+}
