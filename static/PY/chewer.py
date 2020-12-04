@@ -4,8 +4,16 @@ import json
 import os
 from scipy import stats as st
 from pprint import pprint
+import pymongo
+#%%
+conn = 'mongodb://localhost:27017'
+client = pymongo.MongoClient(conn)
 
+# Declare the database
+db = client.Elon_db
 
+# Declare the collection
+elon_db = db.elon_db
 #%%
 filepath = os.path.join("..","Data","countries.geojson")
 with open(filepath) as jsonfile:
@@ -31,17 +39,13 @@ output_dict = {}
 elon_year = elon.groupby('year').agg({
     'conversation_id': 'count'
 })
-
 elon_year = elon_year.reset_index()
 
 ###'Elon' carries the list of elon tweet numbers!!###
 Elon = elon_year['conversation_id'].tolist()
 print(Elon)
 
-
 # %%
-
-
 ###'years' carries the list of years###
 years = [2015,2016,2017,2018,2019,2020]
 
@@ -49,7 +53,6 @@ happyDFs = []
 file_structure = '../Data/Happiness/'
 for i in years:
     happyDFs.append(pd.read_csv(f"{file_structure}{str(i)}.csv"))
-
 countries = happyDFs[0]['Country'].tolist()
 
 Happy = {}
@@ -122,3 +125,19 @@ with open(file_name, 'a') as js_biggins:
     js_biggins.write(f"var freedom = {Freedom}\n")
     js_biggins.write(f"var GDP = {GDP}\n")
     js_biggins.write(f"var hiddenMessage = 'you da best!'")
+
+lists = lists = {
+    'Name':'Lists',
+    'Elon':Elon,
+    'Years':years,
+    'Countries':countries
+}
+response_vars = {
+    'Name':'Dictionaries',
+    'Happy': Happy,
+    'Freedom':Freedom,
+    'GDP':GDP
+}
+
+elon_db.insert_one(lists)
+elon_db.insert_one(response_vars)
