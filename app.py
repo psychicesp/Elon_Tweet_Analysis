@@ -22,7 +22,9 @@ lists = lists[0]
 list_dic = {
     'elon':lists['Elon'],
     'years':lists['Years'],
-    'countries':lists['Countries']
+    'countries':lists['Countries'],
+    'topTenCountries' : [],
+    'topTenCorrelations' : []
 }
 
 #%%
@@ -46,29 +48,50 @@ for feature in elon_db.find({'type':'Feature'}):
     }
     shapes["features"].append(new_entry)
 
+
 #%%
 app = Flask(__name__)
 @app.route("/")
 def musk():
+    topTen = sorted(shapes['features'], key = lambda x: float(x['properties']['correlation']))
+    topTen = topTen[-10:]
+    for i in range(10):
+        list_dic['topTenCountries'].append(topTen[i]['properties']['ADMIN'])
+        list_dic['topTenCorrelations'].append(topTen[i]['properties']['correlation'])
     return render_template("index.html", shapes = shapes, lists = list_dic)
-    
+
 @app.route("/happy")
 def happy():
     for feature in shapes['features']:
         feature['properties']['values'] = feature['properties']['happy']['values']
         feature['properties']['correlation'] = feature['properties']['happy']['correlation']
+    topTen = sorted(shapes['features'], key = lambda x: float(x['properties']['correlation']))
+    topTen = topTen[-10:]
+    for i in range(10):
+        list_dic['topTenCountries'].append(topTen[i]['properties']['ADMIN'])
+        list_dic['topTenCorrelations'].append(topTen[i]['properties']['correlation'])
     return render_template("index.html", shapes = shapes, lists = list_dic)
 @app.route("/freedom")
 def freedom():
     for feature in shapes['features']:
         feature['properties']['values'] = feature['properties']['freedom']['values']
         feature['properties']['correlation'] = feature['properties']['freedom']['correlation']
+    topTen = sorted(shapes['features'], key = lambda x: float(x['properties']['correlation']))
+    topTen = topTen[-10:]
+    for i in range(10):
+        list_dic['topTenCountries'].append(topTen[i]['properties']['ADMIN'])
+        list_dic['topTenCorrelations'].append(topTen[i]['properties']['correlation'])
     return render_template("index.html", shapes = shapes, lists = list_dic)
 @app.route("/GDP")
 def GDP():
     for feature in shapes['features']:
         feature['properties']['values'] = feature['properties']['GDP']['values']
         feature['properties']['correlation'] = feature['properties']['GDP']['correlation']
+    topTen = sorted(shapes['features'], key = lambda x: float(x['properties']['correlation']))
+    topTen = topTen[-10:]
+    for i in range(10):
+        list_dic['topTenCountries'].append(topTen[i]['properties']['ADMIN'])
+        list_dic['topTenCorrelations'].append(topTen[i]['properties']['correlation'])
     return render_template("index.html", shapes = shapes, lists = list_dic)
 
 
