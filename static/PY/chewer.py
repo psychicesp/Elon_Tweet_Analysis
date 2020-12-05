@@ -18,7 +18,9 @@ elon_db = db.elon_db
 filepath = os.path.join("..","Data","countries.geojson")
 with open(filepath) as jsonfile:
     shapes_json = json.load(jsonfile)
-
+filepath = os.path.join("..","Data","countries-land-10km.geo.json")
+with open(filepath) as jsonfile:
+    small_shapes_json = json.load(jsonfile)
 elon = pd.read_csv("../Data/elonmusk.csv")
 # %%
 elon.head()
@@ -73,13 +75,6 @@ for df in happyDFs:
 
 
 
-#6 countries are not represented in 'shapes' so we need to remove these from countries
-#Names maually changes so there are no more mismatches
-# for country in countries:
-#         if country not in shapes.keys():
-#             print(country)
-#             countries.remove(country)
-
 for country in countries:
     Happy[country] = {}
     Happy[country]['Values'] = []
@@ -116,12 +111,6 @@ lists = lists = {
     'Years':years,
     'Countries':countries
 }
-# response_vars = {
-#     'Name':'Dictionaries',
-#     'Happy': Happy,
-#     'Freedom':Freedom,
-#     'GDP':GDP
-# }
 
 shapes = []
 for feature in shapes_json['features']:
@@ -138,6 +127,12 @@ for feature in shapes_json['features']:
         feature['properties']['GDP']['values'] = GDP[feature['properties']['ADMIN']]['Values']
         feature['properties']['GDP']['correlation'] = GDP[feature['properties']['ADMIN']]['Correlation']
         shapes.append(feature)
+
+for feature in small_shapes_json['features']:
+    for shape in shapes:
+        if feature['properties']['A3'] == shape['properties']['ISO_A3']:
+            shape['geometry'] = feature['geometry']
+
 
 # elon_db.insert_one(lists)
 # for shape in shapes:

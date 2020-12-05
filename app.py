@@ -47,26 +47,26 @@ for feature in elon_db.find({'type':'Feature'}):
 app = Flask(__name__)
 @app.route("/")
 def musk():
-    return render_template("index.html")
+    return render_template("index.html", shapes = shapes, elon = elon, years = years, countries = countries)
     
 @app.route("/happy")
 def happy():
     for feature in shapes['features']:
         feature['properties']['values'] = feature['properties']['happy']['values']
         feature['properties']['correlation'] = feature['properties']['happy']['correlation']
-
+    return render_template("index.html", shapes = shapes, elon = elon, years = years, countries = countries)
 @app.route("/freedom")
 def freedom():
     for feature in shapes['features']:
         feature['properties']['values'] = feature['properties']['freedom']['values']
         feature['properties']['correlation'] = feature['properties']['freedom']['correlation']
-
+    return render_template("index.html", shapes = shapes, elon = elon, years = years, countries = countries)
 @app.route("/GDP")
 def GDP():
     for feature in shapes['features']:
         feature['properties']['values'] = feature['properties']['GDP']['values']
         feature['properties']['correlation'] = feature['properties']['GDP']['correlation']
-
+    return render_template("index.html", shapes = shapes, elon = elon, years = years, countries = countries)
 
 
 if __name__ == "__main__":
