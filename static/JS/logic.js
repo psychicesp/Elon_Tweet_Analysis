@@ -5,8 +5,11 @@
 //var happy for default response variable
 //vars freedom and GDP for alternate response variables
 console.log(shapes)
-console.log(freedom)
 console.log(elon)
+console.log(years)
+
+var topShapes = shapes.features.slice(0,10)
+console.log(topShapes)
 
 // Creating map object
 var myMap = L.map("map", {
@@ -40,7 +43,7 @@ geojson = L.choropleth(shapes, {
     mode: "q",
     style: {
     // Border color
-    color: "#fff",
+    //color: "white" ,
     weight: 1,
     fillOpacity: 0.6
     },
@@ -79,5 +82,43 @@ legend.onAdd = function() {
 
 // Adding legend to the map
 legend.addTo(myMap);
+
+function mycharts(response) {
+
+    var trace1 = [{
+        type: "bar",
+        orientation: "h",
+        x: sample_values,
+        y: otu_ids.map(each => `OTU ${each}`),
+        text: otu_labels,
+    }];
+
+    var trace2 = [{
+        x: otu_ids2,
+        y: sample_values2,
+        text: otu_labels2,
+        mode: 'markers',
+        marker:  {
+            color: otu_ids2,
+            colorscale:  'Viridis',
+            size: sample_values2,
+        }
+            
+    }];
+
+    var layout1 = {
+        title: "Test Subject's Top 10 OTU's (Abundance of Species)",               
+        }
+
+    var layout2 = {
+        title:  "Full Profile of Test Subject's OTU Spectrum"
+
+    }
+    
+    Plotly.newPlot("bar", trace1, layout1);
+    Plotly.newPlot("bubble", trace2, layout2);
+
+
+}
   
   
