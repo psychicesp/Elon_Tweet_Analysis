@@ -8,8 +8,19 @@ console.log(shapes)
 console.log(elon)
 console.log(years)
 
-var topShapes = shapes.features.slice(0,10)
-console.log(topShapes)
+// var topShapes = shapes.features.slice(0,10)
+// console.log(topShapes)
+
+// topTenCountries = []
+// topTenCorrelations = []
+
+// topShapes.forEach(function (feature){
+//     topTenCountries.push(feature.properties.ADMIN);
+//     topTenCorrelations.push(feature.properties.correlation)
+// })
+// console.log(topTenCountries)
+// console.log(topTenCorrelations)
+
 
 // Creating map object
 var myMap = L.map("map", {
@@ -64,7 +75,7 @@ legend.onAdd = function() {
     var labels = [];
 
     // Add min & max
-    var legendInfo = "<h1>Happiness Correlation</h1>" +
+    var legendInfo = "<h3>Happiness Correlation</h3>" +
     "<div class=\"labels\">" +
         "<div class=\"min\">" + limits[0] + "</div>" +
         "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
@@ -83,42 +94,40 @@ legend.onAdd = function() {
 // Adding legend to the map
 legend.addTo(myMap);
 
-function mycharts(response) {
 
-    var trace1 = [{
-        type: "bar",
-        orientation: "h",
-        x: sample_values,
-        y: otu_ids.map(each => `OTU ${each}`),
-        text: otu_labels,
-    }];
+//TOP TEN HORIZONTAL GRAPH
+var trace1 = {
+    type: "bar",
+    orientation: "h",
+    x: topTenCorrelations,
+    y: topTenCountries,
+    text: topTenCountries,
+};
 
-    var trace2 = [{
-        x: otu_ids2,
-        y: sample_values2,
-        text: otu_labels2,
-        mode: 'markers',
-        marker:  {
-            color: otu_ids2,
-            colorscale:  'Viridis',
-            size: sample_values2,
-        }
-            
-    }];
+var data = [trace1];
 
-    var layout1 = {
-        title: "Test Subject's Top 10 OTU's (Abundance of Species)",               
-        }
+var layout1 = {
+    title: "Top Ten Correlations",               
+    };
 
-    var layout2 = {
-        title:  "Full Profile of Test Subject's OTU Spectrum"
+Plotly.newPlot("bar", data, layout1);
 
-    }
-    
-    Plotly.newPlot("bar", trace1, layout1);
-    Plotly.newPlot("bubble", trace2, layout2);
+//BOTTOM TEN HORIZONTAL GRAPH
+var trace1 = {
+    type: "bar",
+    orientation: "h",
+    x: topTenCorrelations,
+    y: topTenCountries,
+    text: topTenCountries,
+};
 
+var data = [trace1];
 
-}
+var layout1 = {
+    title: "Bottom Ten Correlations",               
+    };
+
+Plotly.newPlot("line", data, layout1);
+
   
   
