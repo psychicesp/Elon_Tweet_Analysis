@@ -35,8 +35,8 @@ for feature in elon_db.find({'type':'Feature'}):
             "ISO_A3":feature["properties"]["ISO_A3"],
             "values":feature["properties"]["happy"]["values"],
             "correlation":feature["properties"]["happy"]["correlation"],
-            "happy":feature["properties"]["happy"]
-            "freedom":feature["properties"]["freedom"]
+            "happy":feature["properties"]["happy"],
+            "freedom":feature["properties"]["freedom"],
             "GDP":feature["properties"]["GDP"]
         },
         "geometry":feature["geometry"]
@@ -47,7 +47,7 @@ for feature in elon_db.find({'type':'Feature'}):
 app = Flask(__name__)
 @app.route("/")
 def musk():
-    render_template("static/templates/index.html")
+    return render_template("index.html")
     
 @app.route("/happy")
 def happy():
