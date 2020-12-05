@@ -134,9 +134,9 @@ for feature in small_shapes_json['features']:
             shape['geometry'] = feature['geometry']
 
 
-# elon_db.insert_one(lists)
-# for shape in shapes:
-#     elon_db.insert_one(shape)
+elon_db.insert_one(lists)
+for shape in shapes:
+    elon_db.insert_one(shape)
 
 shapes_dict = {
     "type": "FeatureCollection",

@@ -1,5 +1,5 @@
 #%%
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, json
 import pymongo
 import os
 from pprint import pprint
@@ -19,10 +19,13 @@ for i in elon_db.find({'Name':'Lists'}):
     lists.append(i)
 lists = lists[0]
 
-elon = lists["Elon"]
-countries = lists["Countries"]
-years = lists["Years"]
+list_dic = {
+    'elon':lists['Elon'],
+    'years':lists['Years'],
+    'countries':lists['Countries']
+}
 
+#%%
 shapes = {
     "type": "FeatureCollection",
     "features": []
@@ -47,26 +50,26 @@ for feature in elon_db.find({'type':'Feature'}):
 app = Flask(__name__)
 @app.route("/")
 def musk():
-    return render_template("index.html", shapes = shapes, elon = elon, years = years, countries = countries)
+    return render_template("index.html", shapes = shapes, lists = list_dic)
     
 @app.route("/happy")
 def happy():
     for feature in shapes['features']:
         feature['properties']['values'] = feature['properties']['happy']['values']
         feature['properties']['correlation'] = feature['properties']['happy']['correlation']
-    return render_template("index.html", shapes = shapes, elon = elon, years = years, countries = countries)
+    return render_template("index.html", shapes = shapes, lists = list_dic)
 @app.route("/freedom")
 def freedom():
     for feature in shapes['features']:
         feature['properties']['values'] = feature['properties']['freedom']['values']
         feature['properties']['correlation'] = feature['properties']['freedom']['correlation']
-    return render_template("index.html", shapes = shapes, elon = elon, years = years, countries = countries)
+    return render_template("index.html", shapes = shapes, lists = list_dic)
 @app.route("/GDP")
 def GDP():
     for feature in shapes['features']:
         feature['properties']['values'] = feature['properties']['GDP']['values']
         feature['properties']['correlation'] = feature['properties']['GDP']['correlation']
-    return render_template("index.html", shapes = shapes, elon = elon, years = years, countries = countries)
+    return render_template("index.html", shapes = shapes, lists = list_dic)
 
 
 if __name__ == "__main__":
