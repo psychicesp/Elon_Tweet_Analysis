@@ -112,22 +112,7 @@ var layout1 = {
 
 Plotly.newPlot("bar", data, layout1);
 
-//BOTTOM TEN HORIZONTAL GRAPH
-var trace1 = {
-    type: "bar",
-    orientation: "h",
-    x: topTenCorrelations,
-    y: topTenCountries,
-    text: topTenCountries,
-};
 
-var data = [trace1];
-
-var layout1 = {
-    title: "Bottom Ten Correlations",               
-    };
-
-Plotly.newPlot("line", data, layout1);
 
   
   
