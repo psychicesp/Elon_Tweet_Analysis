@@ -1,0 +1,152 @@
+* {
+    buttons-sizing: border-buttons;
+    font-family: Lucida;
+}
+
+body {
+    color: #23377d;
+    background-color: #5b5d8a;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.header {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('starship.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-attachment: fixed;
+    background-position: bottom center;
+    background-size: cover;
+    position: relative;
+    height: 360px;
+}
+
+.center-text {
+    position: absolute;
+    top: 25%;
+    width: 95%;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    color: white;
+}
+
+.main-body {
+    font-size: 20px;
+    position: relative;
+    margin-left: auto;
+    background-color: #e0e4ec;
+    border-style: groove;
+}
+
+.column {
+    float: left;
+    margin-left: 10px;
+    padding: 5px;
+    height: 100%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.buttons {
+    padding: 10px;
+    padding-bottom: 35px;
+    width: 100%;
+    text-align: center;
+}
+
+label {
+    margin-left: 15px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+select {
+    font-size: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 7.5px;
+    padding-bottom: 7.5px;
+}
+
+.buttons select {
+    background-color: #b3d4eb;
+    color: white;
+    padding: 12px;
+    border: none;
+    font-size: 20px;
+    outline: none;
+}
+
+.buttons::before {
+    content: "\f13a";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    font-size: 20px;
+    line-height: 20px;
+    color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+}
+
+.buttons select option {
+    padding: 30px;
+}
+
+#demo {
+    margin-left: 25px;
+}
+
+.demo-title {
+    text-align: center;
+}
+
+#graph {
+    border-style: groove;
+}
+
+.maps {
+    height: 100%;
+    border-style: groove;
+}
+
+#map1 {
+    border-bottom: groove;
+}
+
+.legend {
+    padding: 6px 8px;
+    font: Arial;
+    line-height: 24px;
+}
+
+.legend h1 {
+    text-align: center;
+    margin: 2px 12px 8px;
+}
+
+.legend span {
+    position: relative;
+    bottom: 3px;
+}
+
+.legend i {
+    width: 28px;
+    height: 18px;
+    float: left;
+    margin: 0 8px 0 0;
+    opacity: 0.8;
+}
+
+.legend i.icon {
+    background-size: 18px;
+}
