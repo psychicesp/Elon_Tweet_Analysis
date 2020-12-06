@@ -8,6 +8,15 @@ console.log(shapes)
 console.log(elon)
 console.log(years)
 
+
+function lineMaker(e){
+    let countryName = e.target.feature.properties.ADMIN
+    let countryValues = e.target.feature.properties.values
+    let countryCorrelation = e.target.feature.properties.correlation
+    console.log(countryName)
+    console.log(countryValues)
+    console.log(countryCorrelation)
+}
 // var topShapes = shapes.features.slice(0,10)
 // console.log(topShapes)
 
@@ -63,6 +72,9 @@ geojson = L.choropleth(shapes, {
     onEachFeature: function(feature, layer) {
     layer.bindPopup("Correlation: " + feature.properties.correlation + "<br>Values =<br>" +
         "$" + feature.properties.values);
+    layer.on({
+        click: lineMaker})
+    }
     }
 }).addTo(myMap);
 
