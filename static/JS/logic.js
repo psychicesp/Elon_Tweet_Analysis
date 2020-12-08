@@ -75,7 +75,6 @@ geojson = L.choropleth(shapes, {
     layer.on({
         click: lineMaker})
     }
-    }
 }).addTo(myMap);
 
 // Set up the legend
