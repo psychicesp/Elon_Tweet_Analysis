@@ -20,14 +20,19 @@ function lineMaker(e){
     var trace1 = {
         x: years,
         y: elon,
-        type: 'scatter'
+        type: 'scatter',
+        name:  'Elon Tweets'        
     };
       
     var trace2 = {
         x: years,
         y: countryValues,
-        type: 'scatter'
+        yaxis: 'y2',
+        type: 'scatter', 
+        name:  'Happiness'               
     };
+
+    var data = [trace1, trace2];
 
     var layout = {
         title: 'Tweets X Happiness',
@@ -36,12 +41,13 @@ function lineMaker(e){
           title: 'happiness',
           titlefont: {color: 'rgb(148, 103, 189)'},
           tickfont: {color: 'rgb(148, 103, 189)'},
+          //anchor:  'free',
           overlaying: 'y',
           side: 'right'
         }
     };
       
-    var data = [trace1, trace2];
+    
       
     Plotly.newPlot("line", data, layout);
 
