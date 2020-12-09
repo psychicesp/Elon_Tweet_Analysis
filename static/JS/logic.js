@@ -49,7 +49,7 @@ function lineMaker(e){
             x: .05,
             overlaying: 'y',
             font: {
-                size: 14
+                size: 13
             }
         }
     };
