@@ -54,8 +54,6 @@ function lineMaker(e){
         }
     };
       
-    
-      
     Plotly.newPlot("line", data, layout);
 
 
