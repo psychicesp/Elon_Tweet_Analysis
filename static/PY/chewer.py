@@ -124,9 +124,9 @@ for feature in shapes_json['features']:
         feature['properties']['freedom'] = {}
         feature['properties']['freedom']['values'] = Freedom[feature['properties']['ADMIN']]['Values']
         feature['properties']['freedom']['correlation'] = Freedom[feature['properties']['ADMIN']]['Correlation']
-        feature['properties']['happy'] = {}
-        feature['properties']['happy']['values'] = Happy[feature['properties']['ADMIN']]['Values']
-        feature['properties']['happy']['correlation'] = Happy[feature['properties']['ADMIN']]['Correlation']
+        feature['properties']['happiness'] = {}
+        feature['properties']['happiness']['values'] = Happy[feature['properties']['ADMIN']]['Values']
+        feature['properties']['happiness']['correlation'] = Happy[feature['properties']['ADMIN']]['Correlation']
         feature['properties']['correlation'] = Happy[feature['properties']['ADMIN']]['Correlation']
         feature['properties']['GDP'] = {}
         feature['properties']['GDP']['values'] = GDP[feature['properties']['ADMIN']]['Values']

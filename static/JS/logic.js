@@ -29,16 +29,16 @@ function lineMaker(e){
         y: countryValues,
         yaxis: 'y2',
         type: 'scatter', 
-        name:  'Happiness'               
+        name:  responseVar               
     };
 
     var data = [trace1, trace2];
 
     var layout = {
-        title: 'Tweets X Happiness',
-        yaxis: {title: 'tweets#'},
+        title: `Tweets X ${responseVar} in ${countryName}`,
+        yaxis: {title: '# of Tweets'},
         yaxis2: {
-          title: 'happiness',
+          title: responseVar,
           titlefont: {color: 'rgb(148, 103, 189)'},
           tickfont: {color: 'rgb(148, 103, 189)'},
           //anchor:  'free',

@@ -28,7 +28,7 @@ def renderer(chosen_variable):
     for i in range(10):
         list_dic['topTenCountries'].append(topTen[i]['properties']['ADMIN'])
         list_dic['topTenCorrelations'].append(topTen[i]['properties']['correlation'])
-    list_dic['response_var'] = chosen_variable
+    list_dic['response_var'] = chosen_variable.capitalize()
 
 
 lists = []
@@ -55,9 +55,9 @@ for feature in elon_db.find({'type':'Feature'}):
         "properties":{
             "ADMIN":feature["properties"]["ADMIN"],
             "ISO_A3":feature["properties"]["ISO_A3"],
-            "values":feature["properties"]["happy"]["values"],
-            "correlation":feature["properties"]["happy"]["correlation"],
-            "happy":feature["properties"]["happy"],
+            "values":feature["properties"]["happiness"]["values"],
+            "correlation":feature["properties"]["happiness"]["correlation"],
+            "happiness":feature["properties"]["happiness"],
             "freedom":feature["properties"]["freedom"],
             "GDP":feature["properties"]["GDP"]
         },
@@ -70,12 +70,12 @@ for feature in elon_db.find({'type':'Feature'}):
 app = Flask(__name__)
 @app.route("/")
 def musk():
-    renderer('happy')
+    renderer('happiness')
     return render_template("index.html", shapes = shapes, lists = list_dic)
 
 @app.route("/happy")
 def happy():
-    renderer('happy')
+    renderer('happiness')
     return render_template("index.html", shapes = shapes, lists = list_dic)
 
 @app.route("/freedom")
@@ -85,7 +85,7 @@ def freedom():
 
 @app.route("/GDP")
 def GDP():
-    return renderer('GDP')
+    renderer('GDP')
     return render_template("index.html", shapes = shapes, lists = list_dic)
 
 if __name__ == "__main__":
