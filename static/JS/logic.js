@@ -16,6 +16,36 @@ function lineMaker(e){
     console.log(countryName)
     console.log(countryValues)
     console.log(countryCorrelation)
+
+    var trace1 = {
+        x: years,
+        y: elon,
+        type: 'scatter'
+    };
+      
+    var trace2 = {
+        x: years,
+        y: countryValues,
+        type: 'scatter'
+    };
+
+    var layout = {
+        title: 'Tweets X Happiness',
+        yaxis: {title: 'tweets#'},
+        yaxis2: {
+          title: 'happiness',
+          titlefont: {color: 'rgb(148, 103, 189)'},
+          tickfont: {color: 'rgb(148, 103, 189)'},
+          overlaying: 'y',
+          side: 'right'
+        }
+    };
+      
+    var data = [trace1, trace2];
+      
+    Plotly.newPlot("line", data, layout);
+
+
 }
 // var topShapes = shapes.features.slice(0,10)
 // console.log(topShapes)
