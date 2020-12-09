@@ -1,11 +1,14 @@
 #%%
+print('====Getting Imports====')
 import pandas as pd
 import json
 import os
 from scipy import stats as st
 from pprint import pprint
 import pymongo
+print('***CHOMP***')
 #%%
+print("====Connecting to MongoDB====")
 conn = 'mongodb://localhost:27017'
 client = pymongo.MongoClient(conn)
 
@@ -14,7 +17,9 @@ db = client.Elon_db
 
 # Declare the collection
 elon_db = db.elon_db
+print('***CHOMP***')
 #%%
+print("====Opening Files====")
 filepath = os.path.join("..","Data","countries.geojson")
 with open(filepath) as jsonfile:
     shapes_json = json.load(jsonfile)
@@ -22,7 +27,9 @@ filepath = os.path.join("..","Data","countries-land-10km.geo.json")
 with open(filepath) as jsonfile:
     small_shapes_json = json.load(jsonfile)
 elon = pd.read_csv("../Data/elonmusk.csv")
+print('***CHOMP***')
 # %%
+print('====Getting Lists====')
 elon.head()
 def year_getter(x):
     try:
@@ -45,12 +52,12 @@ elon_year = elon_year.reset_index()
 
 ###'Elon' carries the list of elon tweet numbers!!###
 Elon = elon_year['conversation_id'].tolist()
-print(Elon)
 
 # %%
 ###'years' carries the list of years###
 years = [2015,2016,2017,2018,2019,2020]
-
+print('***CHOMP***')
+print('====Parsing csvs====')
 happyDFs = []
 file_structure = '../Data/Happiness/'
 for i in years:
@@ -90,21 +97,19 @@ for country in countries:
 for df in happyDFs:
     for index, row in df.iterrows():
         if row['Country'] in (countries):
-            Happy[row['Country']]['Values'].append(row['Happiness Score'])
-            Freedom[row['Country']]['Values'].append(row['Freedom'])
-            GDP[row['Country']]['Values'].append(row['Economy (GDP per Capita)'])
+            Happy[row['Country']]['Values'].append(round(row['Happiness Score'],2))
+            Freedom[row['Country']]['Values'].append(round(row['Freedom'],2))
+            GDP[row['Country']]['Values'].append(round(row['Economy (GDP per Capita)'],2))
 
 #populating dict['Correlation']
 for country in countries:
-    Happy[country]['Correlation'] = st.pearsonr(Elon, Happy[country]['Values'])[0]
-    Freedom[country]['Correlation'] = st.pearsonr(Elon, Freedom[country]['Values'])[0]
-    GDP[country]['Correlation'] = st.pearsonr(Elon, GDP[country]['Values'])[0]
+    Happy[country]['Correlation'] = round(st.pearsonr(Elon, Happy[country]['Values'])[0],2)
+    Freedom[country]['Correlation'] = round(st.pearsonr(Elon, Freedom[country]['Values'])[0],2)
+    GDP[country]['Correlation'] = round(st.pearsonr(Elon, GDP[country]['Values'])[0],2)
 
-# %%
-pprint(Happy)
-
+print('***CHOMP***')
 #%%
-
+print('====Packaging Data====')
 lists = lists = {
     'Name':'Lists',
     'Elon':Elon,
@@ -132,8 +137,9 @@ for feature in small_shapes_json['features']:
     for shape in shapes:
         if feature['properties']['A3'] == shape['properties']['ISO_A3']:
             shape['geometry'] = feature['geometry']
-
-
+print('***CHOMP***')
+print('====Spitting data====')
+client.drop_database('Elon_db')
 elon_db.insert_one(lists)
 for shape in shapes:
     elon_db.insert_one(shape)
@@ -155,3 +161,5 @@ with open(file_name, 'a') as js_biggins:
     js_biggins.write(f"var freedom = {Freedom}\n")
     js_biggins.write(f"var GDP = {GDP}\n")
     js_biggins.write(f"var hiddenMessage = 'you da best!'")
+print('***spit***')
+print("Finished Chewing")

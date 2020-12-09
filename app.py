@@ -1,9 +1,12 @@
 #%%
+
 from flask import Flask, render_template, redirect, json
 import pymongo
 import os
 from pprint import pprint
+
 #%%
+print('Connecting to MongoDB')
 conn = 'mongodb://localhost:27017'
 client = pymongo.MongoClient(conn)
 db = client.MuskDB
@@ -14,6 +17,7 @@ client = pymongo.MongoClient(conn)
 
 db = client.Elon_db
 elon_db = db.elon_db
+
 lists = []
 for i in elon_db.find({'Name':'Lists'}):
     lists.append(i)
