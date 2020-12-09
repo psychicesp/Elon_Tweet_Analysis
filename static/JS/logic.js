@@ -44,6 +44,13 @@ function lineMaker(e){
           //anchor:  'free',
           overlaying: 'y',
           side: 'right'
+        },
+        legend: {
+            x: .05,
+            overlaying: 'y',
+            font: {
+                size: 14
+            }
         }
     };
       
