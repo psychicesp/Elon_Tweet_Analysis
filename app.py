@@ -3,6 +3,7 @@
 from flask import Flask, render_template, redirect, json
 import pymongo
 import os
+import random
 from pprint import pprint
 
 #%%
@@ -14,9 +15,25 @@ db = client.MuskDB
 #%%
 conn = 'mongodb://localhost:27017'
 client = pymongo.MongoClient(conn)
-
 db = client.Elon_db
 elon_db = db.elon_db
+
+
+lists = []
+for i in elon_db.find({'Name':'Lists'}):
+    lists.append(i)
+lists = lists[0]
+
+list_dic = {
+    'elon':lists['Elon'],
+    'years':lists['Years'],
+    'tweets':lists['Tweets'],
+    'countries':lists['Countries'],
+    'topTenCountries' : [],
+    'topTenCorrelations' : [],
+
+}
+
 def renderer(chosen_variable):
     for feature in shapes['features']:
         feature['properties']['values'] = feature['properties'][chosen_variable]['values']
@@ -29,20 +46,8 @@ def renderer(chosen_variable):
         list_dic['topTenCountries'].append(topTen[i]['properties']['ADMIN'])
         list_dic['topTenCorrelations'].append(topTen[i]['properties']['correlation'])
     list_dic['response_var'] = chosen_variable.capitalize()
+    
 
-
-lists = []
-for i in elon_db.find({'Name':'Lists'}):
-    lists.append(i)
-lists = lists[0]
-
-list_dic = {
-    'elon':lists['Elon'],
-    'years':lists['Years'],
-    'countries':lists['Countries'],
-    'topTenCountries' : [],
-    'topTenCorrelations' : []
-}
 
 #%%
 shapes = {
@@ -71,22 +76,26 @@ app = Flask(__name__)
 @app.route("/")
 def musk():
     renderer('happiness')
-    return render_template("index.html", shapes = shapes, lists = list_dic)
+    tweet = random.choice(list_dic['tweets'])
+    return render_template("index.html", shapes = shapes, lists = list_dic, tweet = tweet)
 
 @app.route("/happy")
 def happy():
     renderer('happiness')
-    return render_template("index.html", shapes = shapes, lists = list_dic)
+    tweet = random.choice(list_dic['tweets'])
+    return render_template("index.html", shapes = shapes, lists = list_dic, tweet = tweet)
 
 @app.route("/freedom")
 def freedom():
     renderer('freedom')
-    return render_template("index.html", shapes = shapes, lists = list_dic)
+    tweet = random.choice(list_dic['tweets'])
+    return render_template("index.html", shapes = shapes, lists = list_dic, tweet = tweet)
 
 @app.route("/GDP")
 def GDP():
     renderer('GDP')
-    return render_template("index.html", shapes = shapes, lists = list_dic)
+    tweet = random.choice(list_dic['tweets'])
+    return render_template("index.html", shapes = shapes, lists = list_dic, tweet = tweet)
 
 if __name__ == "__main__":
     app.run(debug=True)

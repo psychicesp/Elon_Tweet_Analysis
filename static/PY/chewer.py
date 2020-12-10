@@ -27,6 +27,7 @@ filepath = os.path.join("..","Data","countries-land-10km.geo.json")
 with open(filepath) as jsonfile:
     small_shapes_json = json.load(jsonfile)
 elon = pd.read_csv("../Data/elonmusk.csv")
+tweets = elon['tweet'].tolist()
 print('***CHOMP***')
 # %%
 print('====Getting Lists====')
@@ -114,7 +115,8 @@ lists = lists = {
     'Name':'Lists',
     'Elon':Elon,
     'Years':years,
-    'Countries':countries
+    'Countries':countries,
+    'Tweets':tweets
 }
 
 shapes = []
@@ -140,6 +142,7 @@ for feature in small_shapes_json['features']:
 print('***CHOMP***')
 print('====Spitting data====')
 client.drop_database('Elon_db')
+
 elon_db.insert_one(lists)
 for shape in shapes:
     elon_db.insert_one(shape)
