@@ -143,8 +143,7 @@ geojson = L.choropleth(shapes, {
 
     // Binding a pop-up to each layer
     onEachFeature: function (feature, layer) {
-        layer.bindPopup("Correlation: " + feature.properties.correlation + "<br>Values =<br>" +
-            "$" + feature.properties.values);
+        layer.bindPopup(`<h4>${feature.properties.ADMIN}</h4> Correlation: ${feature.properties.correlation}`);
         layer.on({
             click: lineMaker
         })
