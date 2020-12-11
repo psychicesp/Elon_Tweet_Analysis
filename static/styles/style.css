@@ -67,7 +67,9 @@ select {
     height:800px;
 }
 .data{
-    height:550px;
+    height:525px;
+    margin-left: 2em;
+    border-radius: 15px;
 }
 #map{
     height:800px;
