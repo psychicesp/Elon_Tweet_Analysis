@@ -159,7 +159,7 @@ legend.onAdd = function () {
     var labels = [];
 
     // Add min & max
-    var legendInfo = "<h3>Happiness Correlation</h3>" +
+    var legendInfo = `<h3>${responseVar} Correlation</h3>` +
         "<div class=\"labels\">" +
         "<div class=\"min\">" + limits[0] + "</div>" +
         "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
@@ -191,7 +191,7 @@ var trace1 = {
 var data = [trace1];
 
 var layout1 = {
-    title: "Top Ten Correlations",
+    title: `Top Ten Correlations <br> for ${responseVar}`,
 };
 
 Plotly.newPlot("bar", data, layout1);
