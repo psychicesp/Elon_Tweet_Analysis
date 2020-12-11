@@ -5,20 +5,14 @@ import pymongo
 import os
 import random
 from pprint import pprint
-
 #%%
-print('Connecting to MongoDB')
-conn = 'mongodb://localhost:27017'
-client = pymongo.MongoClient(conn)
-db = client.MuskDB
-
-#%%
+#Mongo Connection
 conn = 'mongodb://localhost:27017'
 client = pymongo.MongoClient(conn)
 db = client.Elon_db
 elon_db = db.elon_db
 
-
+#Extract lists from the Mongo entry into a list, and package them into a dictionary
 lists = []
 for i in elon_db.find({'Name':'Lists'}):
     lists.append(i)
@@ -33,23 +27,9 @@ list_dic = {
     'topTenCorrelations' : [],
 
 }
-
-def renderer(chosen_variable):
-    for feature in shapes['features']:
-        feature['properties']['values'] = feature['properties'][chosen_variable]['values']
-        feature['properties']['correlation'] = feature['properties'][chosen_variable]['correlation']
-    topTen = sorted(shapes['features'], key = lambda x: float(x['properties']['correlation']))
-    topTen = topTen[-10:]
-    list_dic['topTenCountries'] = []
-    list_dic['topTenCorrelations'] = []
-    for i in range(10):
-        list_dic['topTenCountries'].append(topTen[i]['properties']['ADMIN'])
-        list_dic['topTenCorrelations'].append(topTen[i]['properties']['correlation'])
-    list_dic['response_var'] = chosen_variable.capitalize()
-    
-
-
 #%%
+#This creates a geojson style object and cycles through the entries in the DB to package them into a single object
+
 shapes = {
     "type": "FeatureCollection",
     "features": []
@@ -70,8 +50,26 @@ for feature in elon_db.find({'type':'Feature'}):
     }
     shapes["features"].append(new_entry)
 
+#This function restructures the data in a format which can be read by a static index.  
+#The responsive functionality is achieved here in app.py by serving different information
+#This was necessary because the chloropleth.js library can only read surface level object keys in 'features'.
 
+def renderer(chosen_variable):
+    for feature in shapes['features']:
+        feature['properties']['values'] = feature['properties'][chosen_variable]['values']
+        feature['properties']['correlation'] = feature['properties'][chosen_variable]['correlation']
+    topTen = sorted(shapes['features'], key = lambda x: float(x['properties']['correlation']))
+    topTen = topTen[-10:]
+    list_dic['topTenCountries'] = []
+    list_dic['topTenCorrelations'] = []
+    for i in range(10):
+        list_dic['topTenCountries'].append(topTen[i]['properties']['ADMIN'])
+        list_dic['topTenCorrelations'].append(topTen[i]['properties']['correlation'])
+    list_dic['response_var'] = chosen_variable.capitalize()
 #%%
+#Each of these served pages pulls the appropriate value to the surface-level object key and picks a random tweet
+#   before serving up index.html
+
 app = Flask(__name__)
 @app.route("/")
 def musk():

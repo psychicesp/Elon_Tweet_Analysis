@@ -8,25 +8,28 @@ from pprint import pprint
 import pymongo
 print('***CHOMP***')
 #%%
+###Connecting to Mongo###
 print("====Connecting to MongoDB====")
 conn = 'mongodb://localhost:27017'
 client = pymongo.MongoClient(conn)
-
-# Declare the database
 db = client.Elon_db
-
-# Declare the collection
 elon_db = db.elon_db
 print('***CHOMP***')
 #%%
 print("====Opening Files====")
+
 filepath = os.path.join("..","Data","countries.geojson")
+
 with open(filepath) as jsonfile:
     shapes_json = json.load(jsonfile)
 filepath = os.path.join("..","Data","countries-land-10km.geo.json")
+
 with open(filepath) as jsonfile:
     small_shapes_json = json.load(jsonfile)
+
 elon = pd.read_csv("../Data/elonmusk.csv")
+
+#To get the individual tweets
 tweets = elon['tweet'].tolist()
 print('***CHOMP***')
 # %%
@@ -42,8 +45,6 @@ def year_getter(x):
 
 elon['year'] = elon['date'].apply(year_getter)
 
-elon.head()
-# %%
 output_dict = {}
 
 elon_year = elon.groupby('year').agg({
@@ -51,7 +52,7 @@ elon_year = elon.groupby('year').agg({
 })
 elon_year = elon_year.reset_index()
 
-###'Elon' carries the list of elon tweet numbers!!###
+### 'Elon' carries the list of elon tweet numbers ###
 Elon = elon_year['conversation_id'].tolist()
 
 # %%
@@ -59,18 +60,20 @@ Elon = elon_year['conversation_id'].tolist()
 years = [2015,2016,2017,2018,2019,2020]
 print('***CHOMP***')
 print('====Parsing csvs====')
+
+#To convert all fles into CSVs
 happyDFs = []
 file_structure = '../Data/Happiness/'
 for i in years:
     happyDFs.append(pd.read_csv(f"{file_structure}{str(i)}.csv"))
 countries = happyDFs[0]['Country'].tolist()
 
+#The following dictionaries to extract data to
 Happy = {}
 GDP = {}
 Freedom = {}
 #%%
 #2020 GDP values are in a higher order of magnitude, it seems, so I'm dividing them all by 10.
-
 happyDFs[-1]['Economy (GDP per Capita)'] = happyDFs[-1]['Economy (GDP per Capita)']/10
 #%%
 
@@ -81,8 +84,7 @@ for df in happyDFs:
         if country not in df_countries:
             countries.remove(country)
 
-
-
+#Making sure all necessary dictionary keys exist:
 for country in countries:
     Happy[country] = {}
     Happy[country]['Values'] = []
@@ -111,6 +113,9 @@ for country in countries:
 print('***CHOMP***')
 #%%
 print('====Packaging Data====')
+
+#Packaging the data into a format friendly to be stored in MongoDB
+
 lists = lists = {
     'Name':'Lists',
     'Elon':Elon,
@@ -119,6 +124,7 @@ lists = lists = {
     'Tweets':tweets
 }
 
+#Getting the country polygons
 shapes = []
 for feature in shapes_json['features']:
     if feature['properties']['ADMIN'] in countries:
@@ -135,34 +141,16 @@ for feature in shapes_json['features']:
         feature['properties']['GDP']['correlation'] = GDP[feature['properties']['ADMIN']]['Correlation']
         shapes.append(feature)
 
+#Replacing them with these smaller polygons to load quicker
 for feature in small_shapes_json['features']:
     for shape in shapes:
         if feature['properties']['A3'] == shape['properties']['ISO_A3']:
             shape['geometry'] = feature['geometry']
+
 print('***CHOMP***')
 print('====Spitting data====')
+#Putting files into the MongoDB
 client.drop_database('Elon_db')
-
 elon_db.insert_one(lists)
 for shape in shapes:
     elon_db.insert_one(shape)
-
-shapes_dict = {
-    "type": "FeatureCollection",
-    "features":shapes
-}
-#Writing the variables to JavaScript
-file_name = os.path.join('..','JS','variables.js')
-with open(file_name, 'w') as js_biggins:
-    js_biggins.write(f"var shapes = {shapes_dict}\n")
-
-with open(file_name, 'a') as js_biggins:
-    js_biggins.write(f"var elon = {Elon}\n")
-    js_biggins.write(f"var years = {years}\n")
-    js_biggins.write(f"var countries = {countries}\n")
-    js_biggins.write(f"var happy = {Happy}\n")
-    js_biggins.write(f"var freedom = {Freedom}\n")
-    js_biggins.write(f"var GDP = {GDP}\n")
-    js_biggins.write(f"var hiddenMessage = 'you da best!'")
-print('***spit***')
-print("Finished Chewing")
