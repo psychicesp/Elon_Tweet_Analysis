@@ -1,5 +1,5 @@
 @ECHO OFF
-python /static/PY/chewer.py
+python static/PY/chewer.py
 python app.py
-start https.psychicesp.githib.io
+start chrome https.psychicesp.githib.io
 PAUSE
