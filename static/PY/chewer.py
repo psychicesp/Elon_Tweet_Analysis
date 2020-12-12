@@ -151,7 +151,10 @@ for feature in small_shapes_json['features']:
 print('***CHOMP***')
 print('====Spitting data====')
 #Putting files into the MongoDB
-client.drop_database('Elon_db')
+try:
+    client.drop_database('Elon_db')
+except:
+    pass
 elon_db.insert_one(lists)
 for shape in shapes:
     elon_db.insert_one(shape)
