@@ -14,11 +14,7 @@ to extract the data from Mongo and serve it to a web page.
 
 Finally you need to open 
 
-    https:
+    http://127.0.0.1:5000/
 in a modern web bowser to view the page.
 
-If you are on Windows you can simply run 
-
-    full_start.bat
- 
-to complete these steps automatically
+The line graph will only show Elons tweets over the years until a country is clicked on the Map, then that countries line will be shown alongside Elon's
