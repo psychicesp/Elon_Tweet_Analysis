@@ -55,12 +55,11 @@
   integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.js"></script>
+<script type="text/javascript" src="../static/JS/data.js"></script>
 <script type="text/javascript">
-  var shapes = {{ shapes| tojson }}
-  var lists = {{ lists| tojson }}
-  var elon = lists.elon
-  var countries = lists.countries
-  var years = lists.years
+  var elon = lists.Elon
+  var countries = lists.Countries
+  var years = lists.Years
   var topTenCountries = lists.topTenCountries
   var topTenCorrelations = lists.topTenCorrelations
   var responseVar = lists.response_var
