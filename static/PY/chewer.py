@@ -180,4 +180,9 @@ for feature in shapes:
         "geometry":feature["geometry"]
     }
     json_dict["features"].append(new_entry)
+
+output_file = "../JS/data.js"
+
+with open(output_file, 'w', encoding = "UTF-8") as oup:
+    oup.write(f"var lists = {lists}\n var shapes = {json_dict}")
 # %%

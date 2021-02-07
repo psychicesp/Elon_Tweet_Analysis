@@ -53,12 +53,11 @@ function lineMaker(e) {
             }
         }
     };
-
     Plotly.newPlot("line", data, layout);
-
-
 }
-
+function new_response_variable(new) {
+    
+}
 var trace1 = {
     x: years,
     y: elon,

@@ -55,10 +55,11 @@ function lineMaker(e) {
     };
 
     Plotly.newPlot("line", data, layout);
-
-
 }
 
+function new_response(new){
+
+}
 var trace1 = {
     x: years,
     y: elon,
@@ -89,20 +90,6 @@ var layout = {
 };
 
 Plotly.newPlot("line", data, layout);
-
-// var topShapes = shapes.features.slice(0,10)
-// console.log(topShapes)
-
-// topTenCountries = []
-// topTenCorrelations = []
-
-// topShapes.forEach(function (feature){
-//     topTenCountries.push(feature.properties.ADMIN);
-//     topTenCorrelations.push(feature.properties.correlation)
-// })
-// console.log(topTenCountries)
-// console.log(topTenCorrelations)
-
 
 // Creating map object
 var myMap = L.map("map", {
