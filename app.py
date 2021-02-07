@@ -70,7 +70,7 @@ def renderer(chosen_variable):
 #Each of these served pages pulls the appropriate value to the surface-level object key and picks a random tweet
 #   before serving up index.html
 
-app = Flask(__name__)
+app = Flask(__name__) 
 @app.route("/")
 def musk():
     renderer('happiness')
