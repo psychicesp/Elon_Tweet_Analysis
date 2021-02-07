@@ -117,7 +117,7 @@ print('====Packaging Data====')
 
 #Packaging the data into a format friendly to be stored in MongoDB
 
-lists = lists = {
+lists = {
     'Name':'Lists',
     'Elon':Elon,
     'Years':years,
@@ -151,10 +151,33 @@ for feature in small_shapes_json['features']:
 print('***CHOMP***')
 print('====Spitting data====')
 #Putting files into the MongoDB
-try:
-    client.drop_database('Elon_db')
-except:
-    pass
-elon_db.insert_one(lists)
-for shape in shapes:
-    elon_db.insert_one(shape)
+# try:
+#     client.drop_database('Elon_db')
+# except:
+#     pass
+# elon_db.insert_one(lists)
+# for shape in shapes:
+#     elon_db.insert_one(shape)
+
+#%%
+#Attempt to retrofit existing code to spit out a json so the front end can be divorced from the back end
+json_dict = {
+    "type": "FeatureCollection",
+    "features": []
+}
+for feature in shapes:
+    new_entry = {
+        "type":feature["type"],
+        "properties":{
+            "ADMIN":feature["properties"]["ADMIN"],
+            "ISO_A3":feature["properties"]["ISO_A3"],
+            "values":feature["properties"]["happiness"]["values"],
+            "correlation":feature["properties"]["happiness"]["correlation"],
+            "happiness":feature["properties"]["happiness"],
+            "freedom":feature["properties"]["freedom"],
+            "GDP":feature["properties"]["GDP"]
+        },
+        "geometry":feature["geometry"]
+    }
+    json_dict["features"].append(new_entry)
+# %%
