@@ -57,8 +57,31 @@ function lineMaker(e) {
     Plotly.newPlot("line", data, layout);
 }
 
-function new_response(new){
-
+function new_response(respo) {
+    shapes.features.sort(function (a, b) {
+        return b.properties[respo].correlation - a.properties[respo].correlation
+    })
+    topTenCorrelations = shapes.features.slice(0,10).map(function(x) {
+        return x.properties[respo].correlation
+    })
+    topTenCountries = shapes.features.slice(0,10).map(function(x) {
+        return x.properties.ADMIN
+    })
+    var trace1 = {
+        type: "bar",
+        orientation: "h",
+        x: topTenCorrelations,
+        y: topTenCountries,
+        text: topTenCountries,
+    };
+    
+    var data = [trace1];
+    
+    var layout1 = {
+        title: `Top Ten Correlations <br> for ${responseVar}`,
+    };
+    
+    Plotly.newPlot("bar", data, layout1)
 }
 var trace1 = {
     x: years,
@@ -167,21 +190,7 @@ legend.addTo(myMap);
 
 
 //TOP TEN HORIZONTAL GRAPH
-var trace1 = {
-    type: "bar",
-    orientation: "h",
-    x: topTenCorrelations,
-    y: topTenCountries,
-    text: topTenCountries,
-};
-
-var data = [trace1];
-
-var layout1 = {
-    title: `Top Ten Correlations <br> for ${responseVar}`,
-};
-
-Plotly.newPlot("bar", data, layout1);
+new_response("happiness")
 
 
 
