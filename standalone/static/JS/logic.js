@@ -202,8 +202,3 @@ legend.addTo(myMap);
 new_response("happiness")
 
 
-
-//maybe now my commtis will show up on the GitHub website?
-//how about now?!?!?
-//maybe now?!?!?
-//how about possibly now??!?!?!???!!!
