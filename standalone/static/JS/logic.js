@@ -199,10 +199,9 @@ legend.onAdd = function () {
 legend.addTo(myMap);
 
 
-//TOP TEN HORIZONTAL GRAPH
 new_response("happiness")
 
 
 
-
+//maybe now my commtis will show up on the GitHub website?
 
