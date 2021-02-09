@@ -8,6 +8,15 @@ console.log(shapes)
 console.log(elon)
 console.log(years)
 
+function titleCase(str) {
+    str = str.toLowerCase().split(' ');
+    for (var i = 0; i < str.length; i++) {
+        str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+    }
+    return str.join(' ');
+}
+titleCase("I'm a little tea pot");
+
 
 function lineMaker(e) {
     let countryName = e.target.feature.properties.ADMIN
@@ -58,13 +67,14 @@ function lineMaker(e) {
 }
 
 function new_response(respo) {
+    responseVar = titleCase(respo)
     shapes.features.sort(function (a, b) {
         return b.properties[respo].correlation - a.properties[respo].correlation
     })
-    topTenCorrelations = shapes.features.slice(0,10).map(function(x) {
+    topTenCorrelations = shapes.features.slice(0, 10).map(function (x) {
         return x.properties[respo].correlation
     })
-    topTenCountries = shapes.features.slice(0,10).map(function(x) {
+    topTenCountries = shapes.features.slice(0, 10).map(function (x) {
         return x.properties.ADMIN
     })
     var trace1 = {
@@ -74,13 +84,13 @@ function new_response(respo) {
         y: topTenCountries,
         text: topTenCountries,
     };
-    
+
     var data = [trace1];
-    
+
     var layout1 = {
         title: `Top Ten Correlations <br> for ${responseVar}`,
     };
-    
+
     Plotly.newPlot("bar", data, layout1)
 }
 var trace1 = {
