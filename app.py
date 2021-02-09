@@ -52,7 +52,7 @@ for feature in elon_db.find({'type':'Feature'}):
 
 #This function restructures the data in a format which can be read by a static index.  
 #The responsive functionality is achieved here in app.py by serving different information
-#This was necessary because the chloropleth.js library can only read surface level object keys in 'features'.
+#The chloropleth.js library can only read surface level object keys in 'features'.
 
 def renderer(chosen_variable):
     for feature in shapes['features']:
