@@ -54,6 +54,7 @@ function lineMaker(e) {
 }
 
 function new_response(respo) {
+    var tweet = tweets[Math.floor(Math.random()*tweets.length)]
     responseVar = titleCase(respo)
     shapes.features.sort(function (a, b) {
         return b.properties[respo].correlation - a.properties[respo].correlation
